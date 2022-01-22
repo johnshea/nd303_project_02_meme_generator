@@ -8,10 +8,7 @@ class IngestorInterface(ABC):
     @classmethod
     def can_ingest(cls, path) -> bool:
         extension = path.split('.')[-1]
-        if extension not in cls.allowed_extensions:
-            raise Exception("cannot ingest exception")
-
-        return True
+        return extension in cls.allowed_extensions
 
     @classmethod
     @abstractmethod
