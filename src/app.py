@@ -1,9 +1,13 @@
+from multiprocessing import AuthenticationError
 import random
 import os
 import requests
 from flask import Flask, render_template, abort, request
+import requests
+import tempfile
 
-# @TODO Import your Ingestor and MemeEngine classes
+from QuoteEngine import Ingestor, QuoteModel
+from MemeGenerator import MemeEngine
 
 app = Flask(__name__)
 
@@ -18,15 +22,17 @@ def setup():
                    './_data/DogQuotes/DogQuotesPDF.pdf',
                    './_data/DogQuotes/DogQuotesCSV.csv']
 
-    # TODO: Use the Ingestor class to parse all files in the
-    # quote_files variable
-    quotes = None
+    quotes = []
+
+    for f in quote_files:
+        quotes.extend(Ingestor.parse(f))
 
     images_path = "./_data/photos/dog/"
 
-    # TODO: Use the pythons standard library os class to find all
-    # images within the images images_path directory
     imgs = None
+
+    for root, dirs, files in os.walk(images_path):
+        imgs = [os.path.join(root, name) for name in files]
 
     return quotes, imgs
 
@@ -38,14 +44,14 @@ quotes, imgs = setup()
 def meme_rand():
     """ Generate a random meme """
 
-    # @TODO:
-    # Use the random python standard library class to:
-    # 1. select a random image from imgs array
-    # 2. select a random quote from the quotes array
+    img = random.choice(imgs)
+    
+    quote = random.choice(quotes)
+    quote.body = quote.body.replace('\ufeff','')
+    quote.body = quote.body.replace('\u2019',"'")
 
-    img = None
-    quote = None
     path = meme.make_meme(img, quote.body, quote.author)
+
     return render_template('meme.html', path=path)
 
 
@@ -59,14 +65,34 @@ def meme_form():
 def meme_post():
     """ Create a user defined meme """
 
-    # @TODO:
-    # 1. Use requests to save the image from the image_url
-    #    form param to a temp local file.
-    # 2. Use the meme object to generate a meme using this temp
-    #    file and the body and author form paramaters.
-    # 3. Remove the temporary saved image.
+    image_url = request.form.get('image_url')
 
-    path = None
+    if image_url != '':
+        result = requests.get(image_url)
+
+        img = f'{tempfile.gettempdir()}/{random.randint(1,10000000)}.jpeg'
+
+        with open(img, 'wb') as out:
+            out.write(result.content)
+    else:
+        img = random.choice(imgs)
+
+    body = request.form.get('body')
+
+    if not body:
+        quote = random.choice(quotes)
+        body = quote.body
+
+    author = request.form.get('author')
+
+    if not author:
+        quote = random.choice(quotes)
+        author = quote.author
+
+    path = meme.make_meme(img, body, author)
+
+    if image_url != '':
+        os.remove(img)
 
     return render_template('meme.html', path=path)
 
