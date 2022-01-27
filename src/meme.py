@@ -1,3 +1,4 @@
+"""Command line application for creating a meme."""
 import os
 import random
 import argparse
@@ -7,7 +8,20 @@ from MemeGenerator import MemeEngine
 
 
 def generate_meme(path=None, body=None, author=None):
-    """ Generate a meme given an path and a quote """
+    """Generate and save a meme.
+
+    Will generate a meme based on the passed in arguemnts. If one or
+    more arguments are not provided, appropriate random values will
+    be used.
+
+    Arguments:
+        path: An optional string containing file path to the image to use.
+        body: An optional string containing the body of the quote.
+        author: An optional string containing the quote author's name.
+
+    Returns:
+        A string containing the filepath of the generated meme.
+    """
     img = None
     quote = None
 

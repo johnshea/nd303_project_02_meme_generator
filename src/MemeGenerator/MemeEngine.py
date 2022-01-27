@@ -1,14 +1,39 @@
+"""Class that generates a meme."""
 from PIL import Image, ImageDraw, UnidentifiedImageError
 import random
 import os
 
 
 class MemeEngine:
+    """Class that generates a meme.
+
+    Attributes:
+        output_dir: A string containing the path to the directory for
+            generated meme.
+    """
+
     def __init__(self, output_dir):
+        """Init MemeEngine with the path to the directory to save meme."""
         self.output_dir = output_dir
 
     def make_meme(self, img_path, text, author, width=500) -> str:
+        """Generate and saves a meme using provided arguments.
 
+        Arguments:
+            img_path: A string containing the path to the image file.
+            text: A string containing the body of the quote.
+            author: A string containing the author's name.
+            width: The maximum width of the generated meme.
+
+        Returns:
+            A string containing the file path to the generated meme.
+
+        Raises:
+            FileNotFoundError: Error if image file was not found
+                at the img_path location.
+            UnidentifiedImageError: Error if image type is not recognized.
+            OSError: Error if the file was not able to be saved.
+        """
         try:
             im = Image.open(img_path)
         except FileNotFoundError:
