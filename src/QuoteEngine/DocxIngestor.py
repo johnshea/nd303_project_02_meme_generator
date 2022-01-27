@@ -3,6 +3,7 @@ from .QuoteModel import QuoteModel
 from typing import List
 from docx import Document
 
+
 class DocxIngestor(IngestorInterface):
     allowed_extensions = ['docx']
 

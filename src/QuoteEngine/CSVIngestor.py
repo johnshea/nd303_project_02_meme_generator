@@ -3,6 +3,7 @@ from .QuoteModel import QuoteModel
 from typing import List
 import pandas
 
+
 class CSVIngestor(IngestorInterface):
     allowed_extensions = ['csv']
 

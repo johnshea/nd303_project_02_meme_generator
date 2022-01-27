@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from .QuoteModel import QuoteModel
 from typing import List
 
+
 class IngestorInterface(ABC):
     allowed_extensions = []
 

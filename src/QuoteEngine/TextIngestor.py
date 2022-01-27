@@ -2,6 +2,7 @@ from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
 from typing import List
 
+
 class TextIngestor(IngestorInterface):
     allowed_extensions = ['txt']
 
@@ -15,12 +16,12 @@ class TextIngestor(IngestorInterface):
         fp = open(path, 'r')
 
         for line in fp.readlines():
-          line = line.strip('\n').strip('\x0c')
-          if len(line) > 0 :
-              data = line.split('-')
-              body, author = data[0].strip('" '), data[1].strip()
-              new_quote = QuoteModel(body, author)
-              quotes.append(new_quote)
+            line = line.strip('\n').strip('\x0c')
+            if len(line) > 0:
+                data = line.split('-')
+                body, author = data[0].strip('" '), data[1].strip()
+                new_quote = QuoteModel(body, author)
+                quotes.append(new_quote)
 
         fp.close()
 

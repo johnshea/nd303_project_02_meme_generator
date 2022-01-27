@@ -6,6 +6,7 @@ from .PDFIngestor import PDFIngestor
 from .QuoteModel import QuoteModel
 from typing import List
 
+
 class Ingestor(IngestorInterface):
     ingestors = [TextIngestor, DocxIngestor, CSVIngestor, PDFIngestor]
 

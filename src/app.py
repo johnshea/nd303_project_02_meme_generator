@@ -1,9 +1,7 @@
-from multiprocessing import AuthenticationError
 import random
 import os
 import requests
 from flask import Flask, render_template, abort, request
-import requests
 import tempfile
 
 from QuoteEngine import Ingestor, QuoteModel
@@ -45,10 +43,10 @@ def meme_rand():
     """ Generate a random meme """
 
     img = random.choice(imgs)
-    
+
     quote = random.choice(quotes)
-    quote.body = quote.body.replace('\ufeff','')
-    quote.body = quote.body.replace('\u2019',"'")
+    quote.body = quote.body.replace('\ufeff', '')
+    quote.body = quote.body.replace('\u2019', "'")
 
     path = meme.make_meme(img, quote.body, quote.author)
 
