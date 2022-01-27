@@ -8,7 +8,7 @@ The user can customize the output by providing an image, a quote, and an author'
 
 ## Project Setup
 
-Clone the repo to your local machine.
+Clone the repo.
 ```bash
 git clone https://github.com/johnshea/nd303_project_02_meme_generator.git
 ```
@@ -17,19 +17,18 @@ Install the required dependencies.
 pip install -r requirements.txt
 ```
 Create required output directories.
--- Linux/Mac
 ```bash
 mkdir static
 mkdir tmp
 ```
 
-## To Run The Full Project
+## To Run The Project From The Command Line
 
-Run
+From the command line, run:
 ```bash
 python3 meme.py
 ```
-
+Additional runtime configuration options:
 ```
 usage: meme.py [-h] [-p PATH] [-b BODY] [-a AUTHOR]
 
@@ -43,15 +42,26 @@ optional arguments:
                         quote author to add to the image
 ```
 
+## To Run The Project As A Flask Application
+
+From the command line, run:
+```bash
+$ export FLASK_APP=app.py
+$ flask run --host 0.0.0.0 --port 3000
+```
+Open your browser.
+Open `http://localhost:3000/`
+NOTE - Generated memes will be stored in directory `./static`.
+
 ## Modules
 
-### module MemeGenerator
-#### class MemeEngine
+### Module `MemeGenerator`
+#### class `MemeEngine`
 Dependencies: `PIL`, `random`, `os`
 
 A class to generate a meme.
 
-Method `make_meme` will generate a meme from optionally provided arguments. This method will return the path of the generated mem.
+Method `make_meme` will generate a meme from optionally provided arguments. This method will return the path of the generated meme.
 
 Example:
 ```python
@@ -62,13 +72,13 @@ Example:
 >>> 
 ```
 
-### Module QuoteEngine
-#### class IngestorInterface
+### Module `QuoteEngine`
+#### class `IngestorInterface`
 Dependencies: `abc`, `QuoteModel`, `typing`
 
 An abstract base class upon which concrete ingestor classes are realized.
 
-An ingestor class is concrete subclass which will parse file types based on its file extension.
+An ingestor class is a concrete subclass which will parse file types based on their file extension.
 
 Concrete classes must implement:
 - abstract method `parse`. This method parses the provided file and returns a list of `QuoteModel` objects.
@@ -115,6 +125,12 @@ A concrete class to ingest a `docx` file.
 
 A call to method `parse` will return a list of `QuoteModel` objects.
 
+File format:
+```
+"Line 1" - Author 1
+"Line 2" - Author 2
+```
+
 Example:
 ```python
 >>> from QuoteEngine import DocxIngestor
@@ -130,6 +146,12 @@ Dependencies: `IngestorInterface`, `QuoteModel`, `typing`, `subprocess`, `random
 A concrete class to ingest a `pdf` file.
 
 A call to method `parse` will return a list of `QuoteModel` objects.
+
+File format:
+```
+"Line 1" - Author 1
+"Line 2" - Author 2
+```
 
 Example:
 ```python
