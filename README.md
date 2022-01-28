@@ -8,20 +8,41 @@ The user can customize the output by providing an image, a quote, and an author'
 
 ## Project Setup
 
-Clone the repo.
+Clone the project repository.
 ```bash
 git clone https://github.com/johnshea/nd303_project_02_meme_generator.git
 ```
-Install the required dependencies.
+Change into the project directory.
+```bash
+cd nd303_project_02_meme_generator
+```
+Create a virtual environment.
+```bash
+python3 -m venv env
+```
+Activate the virtual environment.
+```bash
+source env/bin/activate
+```
+Change into the `src` directory.
+```bash
+cd src
+```
+Install the required project dependencies.
 ```bash
 pip install -r requirements.txt
 ```
-Create required output directories.
+Create the required output directories.
 ```bash
 mkdir static
 mkdir tmp
 ```
+Follow the steps below for running this as a command line application or as a Flask application.
 
+_NOTE_: When finished, to exit the virtual environment run:
+```bash
+deactivate
+```
 ## To Run The Project From The Command Line
 
 From the command line, run:
@@ -51,7 +72,7 @@ $ flask run --host 0.0.0.0 --port 3000
 ```
 Open your browser.
 Open `http://localhost:3000/`
-NOTE - Generated memes will be stored in directory `./static`.
+NOTE - Generated memes will be saved in directory `static`.
 
 ## Modules
 
